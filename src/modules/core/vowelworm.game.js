@@ -154,7 +154,7 @@ VowelWorm.Game = function( options ) {
   function rotate(obj){
     var x = obj.x;
     var y = obj.y;
-    var degree = 90;
+    var degree = degreesToRadians(90);
 
     var new_x = (x * Math.cos(degree)) + (y * Math.sin(degree));
     var new_y = (-x * Math.sin(degree)) + (y * Math.cos(degree));
