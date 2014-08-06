@@ -126,8 +126,10 @@ VowelWorm.Game = function( options ) {
       var x = position[1];
       var y = position[2];
 
-      //Pass in coords flipped 90 degrees
-      var coords = adjustXAndY(y,-x);
+      //Rotate coords
+      var coords = rotate({x:x,y:y});
+
+      coords = adjustXAndY(coords.x,coords.y);
       return coords;
     }else{
       return null;
@@ -148,6 +150,21 @@ VowelWorm.Game = function( options ) {
     
     return {x:adjustedX,y:adjustedY};
   };
+
+  function rotate(obj){
+    var x = obj.x;
+    var y = obj.y;
+    var degree = 90;
+
+    var new_x = (x * Math.cos(degree)) + (y * Math.sin(degree));
+    var new_y = (-x * Math.sin(degree)) + (y * Math.cos(degree));
+
+    return {x:new_x,y:new_y};
+  };
+
+  function degreesToRadians(angle){
+    return angle * (Math.PI /180);
+  }
 
   /**
    * Determines whether, for plotting purposes, the audio data is silent or not
