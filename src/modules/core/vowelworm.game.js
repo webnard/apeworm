@@ -9,7 +9,7 @@
  * @type VowelWorm.Game
  * @constructor
  */
-VowelWorm.Game = function( options ) {
+window.VowelWorm.Game = function( options ) {
   "use strict";
 
   var game = this;
