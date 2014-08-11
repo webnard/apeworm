@@ -15,7 +15,7 @@
     "grunt-contrib-clean": "~0.6.0"
   },
   "scripts": {
-    "test": "grunt test",
+    "test": "grunt test && grunt compile-all",
     "compile": "grunt compile"
   }
 }
