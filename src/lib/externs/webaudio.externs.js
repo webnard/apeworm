@@ -28,7 +28,17 @@
 /**
  * @constructor
  */
-var AudioContext = function() {};
+window.AudioContext = function() {};
+
+/**
+ * @constructor
+ */
+var AudioContext = window.AudioContext;
+
+/**
+ * @return {Object}
+ */
+AudioContext.prototype.createMediaElementSource
 
 
 /** @type {AudioDestinationNode} */

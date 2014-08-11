@@ -321,9 +321,9 @@ VowelWorm.savitzkyGolay = function savitzkyGolay(y, window_size, order) {
 
 /**
  * TODO: documentation; we pulled this algorithm from StackOverflow—but where?
- * @param {Array.number} m
- * @param {Array.number} y
- * @return {Array.number}
+ * @param {Array.<number>} m
+ * @param {Array.<number>} y
+ * @return {Array.<number>}
  */
 VowelWorm.convolve = function convolve(m, y) {
   var result = new Array(),

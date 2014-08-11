@@ -1,6 +1,10 @@
 module.exports = function(grunt) {
+  var output_dir = './out/';
+  var build_dir = output_dir + 'build/';
+  var release_dir = output_dir + 'release/';
+
   var config = {
-    all_js_concat_output: './concat.js'
+    all_js_concat_output: build_dir + 'concat.js'
   };
   
   var compiler = require('superstartup-closure-compiler');
@@ -27,7 +31,7 @@ module.exports = function(grunt) {
       },
       everything: {
         src: config.all_js_concat_output,
-        dest: 'vowelworm-complete.min.js'
+        dest: release_dir + 'vowelworm-complete.min.js'
       }
     },
     concat: {
@@ -39,12 +43,14 @@ module.exports = function(grunt) {
         ],
         dest: config.all_js_concat_output
       }
-    }
+    },
+    clean: [output_dir]
   });
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-closure-tools');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('test', ['qunit']);
+  grunt.registerTask('test', 'qunit');
   grunt.registerTask('compile-all', ['concat:everything','closureCompiler:everything']);
 };
