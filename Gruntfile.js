@@ -4,7 +4,8 @@ module.exports = function(grunt) {
   var release_dir = output_dir + 'release/';
 
   var config = {
-    all_js_concat_output: build_dir + 'concat.js'
+    all_js_concat_output: build_dir + 'concat.js',
+    main_concat_output: build_dir + 'main-concat.js'
   };
   
   var compiler = require('superstartup-closure-compiler');
@@ -18,8 +19,9 @@ module.exports = function(grunt) {
         create_source_map: null,
         compilerFile: compiler.getPath(),
         compilerOpts: {
+          compilation_level: 'SIMPLE_OPTIMIZATIONS',
+          language_in: 'ECMASCRIPT5',
           externs: grunt.file.expand(['src/lib/externs/**/*.js']),
-          compilation_level: 'ADVANCED_OPTIMIZATIONS',
           warning_level: 'verbose',
           output_wrapper: '"(function(){%output%}).call(this);"',
           jscomp_off: ['nonStandardJsDocs']
@@ -29,22 +31,49 @@ module.exports = function(grunt) {
         },
         TieredCompilation: true,
       },
-      everything: {
+      demo: { // for Github pages
+        TEMPCompilerOpts: {
+          compilation_level: 'ADVANCED_OPTIMIZATIONS'
+        },
         src: config.all_js_concat_output,
-        dest: release_dir + 'vowelworm-complete.min.js'
+        dest: release_dir + 'vowelworm-demo.min.js'
+      },
+      main: {
+        files: [
+          {
+            expand: true,
+            src: [
+              build_dir + 'vowelworm.js',
+              'src/modules/**/*.js',
+              '!src/modules/**/*.min.js'
+            ],
+            ext: '.min.js'
+          }
+        ],
+      },
+      all: {
+        src: config.main_concat_output,
+        dest: release_dir + 'vowelworm.complete.min.js'
       }
     },
     concat: {
-      everything: {
+      main: {
         src: [
           'src/vowelworm.js',
-          'src/modules/**/*.js',
+          'src/modules/**/*.js'
+        ],
+        dest: config.main_concat_output
+      },
+      demo: {
+        src: [
+          'src/vowelworm.js',
+          'src/modules/core/vowelworm.game.js',
           'main.js'
         ],
         dest: config.all_js_concat_output
       }
     },
-    clean: [output_dir]
+    clean: [output_dir, 'src/modules/**/*.min.js', 'src/vowelworm.min.js']
   });
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-closure-tools');
@@ -52,5 +81,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('test', 'qunit');
-  grunt.registerTask('compile-all', ['concat:everything','closureCompiler:everything']);
+  grunt.registerTask('compile-demo', ['concat:demo','closureCompiler:demo']);
+  grunt.registerTask('compile', ['clean', 'closureCompiler:main', 'concat:main', 'closureCompiler:all']);
 };
