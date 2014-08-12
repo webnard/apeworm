@@ -16,7 +16,6 @@
     "grunt-contrib-copy": "~0.5.0"
   },
   "scripts": {
-    "test": "grunt test && grunt compile-demo",
-    "compile": "grunt compile"
+    "test": "grunt"
   }
 }

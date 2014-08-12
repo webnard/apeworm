@@ -43,12 +43,16 @@ module.exports = function(grunt) {
           {
             expand: true,
             src: [
-              build_dir + 'vowelworm.js',
+              'src/vowelworm.js',
               'src/modules/**/*.js',
               '!src/modules/**/*.min.js'
             ],
             ext: '.min.js',
-            extDot: 'last'
+            extDot: 'last',
+            rename: function(dest, matchedSrcPath, options) {
+              // puts the compiled files in the release directory
+              return matchedSrcPath.replace(/^src/, release_dir);
+            }
           }
         ],
       },
@@ -84,4 +88,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', 'qunit');
   grunt.registerTask('compile-demo', ['concat:demo','closureCompiler:demo']);
   grunt.registerTask('compile', ['clean', 'closureCompiler:main', 'concat:main', 'closureCompiler:all']);
+  grunt.registerTask('default', ['test','compile','compile-demo']);
 };
