@@ -47,7 +47,8 @@ module.exports = function(grunt) {
               'src/modules/**/*.js',
               '!src/modules/**/*.min.js'
             ],
-            ext: '.min.js'
+            ext: '.min.js',
+            extDot: 'last'
           }
         ],
       },
