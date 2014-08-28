@@ -138,5 +138,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', 'qunit');
   grunt.registerTask('doc', ['clean:doc', 'exec:jsdoc', 'markdown', 'replace:readme']);
   grunt.registerTask('compile', ['clean:src', 'closureCompiler:modules', 'closureCompiler:core','concat:main', 'closureCompiler:all']);
+  grunt.registerTask('compile:complete', ['clean:src', 'concat:main', 'closureCompiler:all']);
   grunt.registerTask('default', ['test','compile','doc']);
 };
